@@ -1,6 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { generateMarkdown } from "./shared";
 
 const Schema = z.object({
   taskList: z.string().min(1),
@@ -10,6 +9,7 @@ const Schema = z.object({
 export const planTasks = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => Schema.parse(input))
   .handler(async ({ data }) => {
+    const { generateMarkdown } = await import("./shared.server");
     const system =
       "Generate a structured daily plan. Prioritize tasks based on the provided urgency/importance. You must include time optimization strategies.";
     const user = `Priority focus: ${data.priority}\n\nTasks:\n${data.taskList}`;
