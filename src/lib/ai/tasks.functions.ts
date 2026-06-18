@@ -56,7 +56,6 @@ Return ONLY a JSON object matching the provided schema. Do not include markdown,
       schema: PlanSchema,
       system,
       prompt: userPrompt,
-      mode: "json",
     });
     return object;
   });
