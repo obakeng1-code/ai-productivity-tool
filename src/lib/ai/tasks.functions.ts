@@ -30,13 +30,16 @@ export const planTasks = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => Schema.parse(input))
   .handler(async ({ data }): Promise<Plan> => {
     const { generateObject } = await import("ai");
-    const { createLovableAiGatewayProvider, CHAT_MODEL, FORMATTING_RULES } =
-      await import("@/lib/ai-gateway.server");
+    const { createLovableAiGatewayProvider, CHAT_MODEL } = await import(
+      "@/lib/ai-gateway.server"
+    );
     const key = process.env.LOVABLE_API_KEY;
     if (!key) throw new Error("Missing LOVABLE_API_KEY");
     const gateway = createLovableAiGatewayProvider(key);
 
-    const system = `You are an expert project manager. Analyze the provided tasks, their specific deadlines, and their priority levels (Urgent, High, Medium, Low). Prioritize the execution logically. You must also provide strategic instructions on how to achieve the overall goal, meet these exact deadlines, and overcome likely constraints.\n\n${FORMATTING_RULES}`;
+    const system = `You are an expert project manager. Analyze the provided tasks, their specific deadlines, and their priority levels (Urgent, High, Medium, Low). Prioritize the execution logically. You must also provide strategic instructions on how to achieve the overall goal, meet these exact deadlines, and overcome likely constraints.
+
+Return ONLY a JSON object matching the provided schema. Do not include markdown, code fences, or commentary. Keep each string field concise (max 2 sentences, no nested bullets).`;
 
     const userPrompt = [
       `Overall Goal / Project Description:\n${data.overallGoal || "(not provided)"}`,
