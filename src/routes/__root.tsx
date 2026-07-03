@@ -140,6 +140,20 @@ function RootComponent() {
 }
 
 function AppLayout() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isLanding = pathname === "/";
+
+  if (isLanding) {
+    return (
+      <>
+        <main className="min-h-screen w-full bg-background">
+          <Outlet />
+        </main>
+        <Toaster richColors position="top-right" />
+      </>
+    );
+  }
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
