@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { ToolPage } from "@/components/tool-page";
 import { OutputPanel } from "@/components/output-panel";
@@ -32,10 +33,13 @@ export const Route = createFileRoute("/email")({
   component: EmailPage,
 });
 
+type Tone = "Formal" | "Casual" | "Persuasive" | "Direct" | "Empathetic";
+const TONES: Tone[] = ["Formal", "Casual", "Persuasive", "Direct", "Empathetic"];
+
 function EmailPage() {
   const run = useServerFn(generateEmail);
   const [audience, setAudience] = useState<"Client" | "Manager" | "Team">("Client");
-  const [tone, setTone] = useState<"Formal" | "Informal" | "Persuasive">("Formal");
+  const [tone, setTone] = useState<Tone>("Formal");
   const [subject, setSubject] = useState("");
   const [keyPoints, setKeyPoints] = useState("");
   const [output, setOutput] = useState("");
@@ -62,14 +66,18 @@ function EmailPage() {
   };
 
   return (
-    <ToolPage title="Email Generator" description="Generate professional emails tuned to audience and tone.">
+    <ToolPage
+      title="Email Generator"
+      description="Generate professional emails tuned to audience and tone."
+      layout="stack"
+    >
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Inputs</CardTitle>
+          <CardTitle className="text-base">Control Panel</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-4">
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-[220px_1fr]">
               <div className="space-y-1.5">
                 <Label>Audience</Label>
                 <Select value={audience} onValueChange={(v) => setAudience(v as typeof audience)}>
@@ -82,25 +90,34 @@ function EmailPage() {
                 </Select>
               </div>
               <div className="space-y-1.5">
-                <Label>Tone</Label>
-                <Select value={tone} onValueChange={(v) => setTone(v as typeof tone)}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Formal">Formal</SelectItem>
-                    <SelectItem value="Informal">Informal</SelectItem>
-                    <SelectItem value="Persuasive">Persuasive</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="subject">Subject</Label>
+                <Input
+                  id="subject"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  placeholder="e.g. Q3 launch update"
+                />
               </div>
             </div>
-            <div className="space-y-1.5">
-              <Label htmlFor="subject">Subject</Label>
-              <Input
-                id="subject"
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-                placeholder="e.g. Q3 launch update"
-              />
+            <div className="space-y-2">
+              <Label>Tone</Label>
+              <div className="flex flex-wrap gap-2">
+                {TONES.map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setTone(t)}
+                    className={cn(
+                      "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                      tone === t
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-background text-muted-foreground hover:border-primary/50 hover:text-foreground",
+                    )}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="key-points">Key points</Label>
@@ -109,17 +126,24 @@ function EmailPage() {
                 value={keyPoints}
                 onChange={(e) => setKeyPoints(e.target.value)}
                 placeholder="Bullet points or short notes the email should cover."
-                className="min-h-[180px]"
+                className="min-h-[140px]"
               />
             </div>
-            <Button type="submit" disabled={loading} className="w-full">
+            <Button type="submit" disabled={loading} className="w-full sm:w-auto">
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {loading ? "Generating..." : "Generate Email"}
             </Button>
           </form>
         </CardContent>
       </Card>
-      <OutputPanel value={output} onChange={setOutput} loading={loading} />
+      <OutputPanel
+        value={output}
+        onChange={setOutput}
+        loading={loading}
+        title="Generated Email"
+        emptyHint="Your drafted email will appear here."
+        minHeight="min-h-[420px]"
+      />
     </ToolPage>
   );
 }
