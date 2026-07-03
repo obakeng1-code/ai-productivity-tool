@@ -52,9 +52,9 @@ function ResearchPage() {
 
   return (
     <ToolPage title="Research Assistant" description="Quickly distill topics into insights and recommendations.">
-      <Card>
+      <Card className="bg-muted/30 border-border/80">
         <CardHeader>
-          <CardTitle className="text-base">Topic or raw text</CardTitle>
+          <CardTitle className="text-base">Input Engine — Topic</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-4">
@@ -65,7 +65,7 @@ function ResearchPage() {
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="A topic, question, or paste source material to summarize."
-                className="min-h-[320px]"
+                className="min-h-[420px] bg-background"
               />
             </div>
             <Button type="submit" disabled={loading} className="w-full">
@@ -75,7 +75,13 @@ function ResearchPage() {
           </form>
         </CardContent>
       </Card>
-      <OutputPanel value={output} onChange={setOutput} loading={loading} />
+      <OutputPanel
+        value={output}
+        onChange={setOutput}
+        loading={loading}
+        title="Live Output Desk"
+        emptyHint="Key insights and recommendations will appear here."
+      />
     </ToolPage>
   );
 }

@@ -99,9 +99,9 @@ function TasksPage() {
 
   return (
     <ToolPage title="Task Planner" description="Prioritized daily plan with time optimization.">
-      <Card>
+      <Card className="bg-muted/30 border-border/80">
         <CardHeader>
-          <CardTitle className="text-base">Inputs</CardTitle>
+          <CardTitle className="text-base">Input Engine — Tasks</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-5">

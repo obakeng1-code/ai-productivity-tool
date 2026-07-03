@@ -55,9 +55,9 @@ function MeetingsPage() {
       title="Meeting Notes Summarizer"
       description="Extract decisions, action items, deadlines, and responsibilities."
     >
-      <Card>
+      <Card className="bg-muted/30 border-border/80">
         <CardHeader>
-          <CardTitle className="text-base">Raw notes</CardTitle>
+          <CardTitle className="text-base">Input Engine — Raw Notes</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-4">
@@ -68,7 +68,7 @@ function MeetingsPage() {
                 value={rawNotes}
                 onChange={(e) => setRawNotes(e.target.value)}
                 placeholder="Paste your raw meeting transcript or scribbled notes here..."
-                className="min-h-[320px]"
+                className="min-h-[420px] bg-background"
               />
             </div>
             <Button type="submit" disabled={loading} className="w-full">
@@ -78,7 +78,13 @@ function MeetingsPage() {
           </form>
         </CardContent>
       </Card>
-      <OutputPanel value={output} onChange={setOutput} loading={loading} />
+      <OutputPanel
+        value={output}
+        onChange={setOutput}
+        loading={loading}
+        title="Live Output Desk"
+        emptyHint="Decisions, action items, and deadlines will appear here."
+      />
     </ToolPage>
   );
 }

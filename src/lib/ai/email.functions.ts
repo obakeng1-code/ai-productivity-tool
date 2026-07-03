@@ -5,7 +5,7 @@ const Schema = z.object({
   audience: z.enum(["Client", "Manager", "Team"]),
   subject: z.string().min(1),
   keyPoints: z.string().min(1),
-  tone: z.enum(["Formal", "Informal", "Persuasive"]),
+  tone: z.enum(["Formal", "Casual", "Persuasive", "Direct", "Empathetic"]),
 });
 
 export const generateEmail = createServerFn({ method: "POST" })
