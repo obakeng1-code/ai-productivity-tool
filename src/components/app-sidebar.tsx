@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/sidebar";
 
 const items = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard },
+  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Email", url: "/email", icon: Mail },
   { title: "Meetings", url: "/meetings", icon: CalendarCheck },
   { title: "Tasks", url: "/tasks", icon: ListChecks },
@@ -30,7 +30,8 @@ const items = [
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const isActive = (url: string) => (url === "/" ? pathname === "/" : pathname.startsWith(url));
+  const isActive = (url: string) =>
+    url === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(url);
 
   return (
     <Sidebar collapsible="icon">
