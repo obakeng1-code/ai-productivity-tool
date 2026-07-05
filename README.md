@@ -48,8 +48,7 @@ Routing Engine: React Router DOM (Splitting the / landing page from the /dashboa
 
 Data Visualization: Recharts or Chart.js
 📁 Project Architecture
-Plaintext
-src/
+  src/
 ├── components/
 │   ├── dashboard/
 │   │   ├── AnalyticsGrid.tsx      # Donut & Line charts for workspace analytics
@@ -65,5 +64,7 @@ src/
 ├── pages/
 │   ├── LandingPage.tsx            # Cover hero section view ('/')
 │   └── DashboardOverview.tsx      # Main platform analytics desk ('/dashboard')
+├── App.tsx                        # React Router application entry point
+└── main.tsx
 ├── App.tsx                        # React Router application entry point
 └── main.tsx
