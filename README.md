@@ -47,24 +47,3 @@ Styling & Icons: Tailwind CSS / Lucide React Icons
 Routing Engine: React Router DOM (Splitting the / landing page from the /dashboard core operational portal)
 
 Data Visualization: Recharts or Chart.js
-📁 Project Architecture
-  src/
-├── components/
-│   ├── dashboard/
-│   │   ├── AnalyticsGrid.tsx      # Donut & Line charts for workspace analytics
-│   │   └── MetricCard.tsx         # Individual performance indicator cards
-│   ├── tools/
-│   │   ├── EmailGenerator.tsx     # Top/Bottom control input & email display view
-│   │   ├── MeetingSummarizer.tsx  # Side-by-side note processing view
-│   │   ├── TaskPlanner.tsx        # Left/Right strategic scheduling layout
-│   │   └── ResearchAssistant.tsx  # Interactive research document panel
-│   └── ui/                        # Reusable buttons, select dropdowns, and badges
-├── layouts/
-│   └── DashboardLayout.tsx        # Persistent sidebar navigation framework
-├── pages/
-│   ├── LandingPage.tsx            # Cover hero section view ('/')
-│   └── DashboardOverview.tsx      # Main platform analytics desk ('/dashboard')
-├── App.tsx                        # React Router application entry point
-└── main.tsx
-├── App.tsx                        # React Router application entry point
-└── main.tsx
