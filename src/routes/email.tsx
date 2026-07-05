@@ -36,9 +36,28 @@ export const Route = createFileRoute("/email")({
 type Tone = "Formal" | "Casual" | "Persuasive" | "Direct" | "Empathetic";
 const TONES: Tone[] = ["Formal", "Casual", "Persuasive", "Direct", "Empathetic"];
 
+type Audience =
+  | "Client"
+  | "Manager"
+  | "Team"
+  | "Executive / Board"
+  | "External Partner / Vendor"
+  | "Human Resources"
+  | "Direct Report";
+
+const AUDIENCES: { value: Audience; label: string }[] = [
+  { value: "Client", label: "Client" },
+  { value: "Manager", label: "Manager" },
+  { value: "Team", label: "Team" },
+  { value: "Executive / Board", label: "Executive / Board" },
+  { value: "External Partner / Vendor", label: "External Partner / Vendor" },
+  { value: "Human Resources", label: "Human Resources" },
+  { value: "Direct Report", label: "Direct Report" },
+];
+
 function EmailPage() {
   const run = useServerFn(generateEmail);
-  const [audience, setAudience] = useState<"Client" | "Manager" | "Team">("Client");
+  const [audience, setAudience] = useState<Audience>("Client");
   const [tone, setTone] = useState<Tone>("Formal");
   const [subject, setSubject] = useState("");
   const [keyPoints, setKeyPoints] = useState("");
@@ -80,12 +99,12 @@ function EmailPage() {
             <div className="grid gap-4 md:grid-cols-[220px_1fr]">
               <div className="space-y-1.5">
                 <Label>Audience</Label>
-                <Select value={audience} onValueChange={(v) => setAudience(v as typeof audience)}>
+                <Select value={audience} onValueChange={(v) => setAudience(v as Audience)}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Client">Client</SelectItem>
-                    <SelectItem value="Manager">Manager</SelectItem>
-                    <SelectItem value="Team">Team</SelectItem>
+                    {AUDIENCES.map((a) => (
+                      <SelectItem key={a.value} value={a.value}>{a.label}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
