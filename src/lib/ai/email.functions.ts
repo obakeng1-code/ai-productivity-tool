@@ -2,7 +2,15 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 const Schema = z.object({
-  audience: z.enum(["Client", "Manager", "Team"]),
+  audience: z.enum([
+    "Client",
+    "Manager",
+    "Team",
+    "Executive / Board",
+    "External Partner / Vendor",
+    "Human Resources",
+    "Direct Report",
+  ]),
   subject: z.string().min(1),
   keyPoints: z.string().min(1),
   tone: z.enum(["Formal", "Casual", "Persuasive", "Direct", "Empathetic"]),
